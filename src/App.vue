@@ -29,7 +29,7 @@ export default {
 
     //ctrl + j
     let a = this.deepAssign({a: 1 }, {a: {b: 0 } }, {a: {b: 1, c: 2 } }, {a: {c: {d: 2 } } }, {a: {c: {f: 3 } } }); 
-    console.log(a)
+    // console.log(a)
   },
   computed: mapState([]),
   components: {
@@ -47,5 +47,8 @@ export default {
   .app-view {
     margin-left: 50px;
   }
+}
+* {
+  box-sizing: border-box;
 }
 </style>

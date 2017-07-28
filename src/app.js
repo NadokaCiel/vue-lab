@@ -12,6 +12,7 @@ import router from './router'
 
 import axios from 'axios'
 import deepAssign from "deep-assign"
+import _ from "lodash"
 import "babel-polyfill"
 
 import 'flex.css'

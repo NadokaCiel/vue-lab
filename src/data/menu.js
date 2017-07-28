@@ -11,6 +11,10 @@ export default [{
         icon: "fa fa-fw fa-square",
         route: "Button",
     }, {
+        name: "Linkup",
+        icon: "fa fa-fw fa-random",
+        route: "Linkup",
+    }, {
         name: "Traversal",
         icon: "fa fa-fw fa-superpowers",
         route: "Traversal",
