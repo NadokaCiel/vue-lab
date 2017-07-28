@@ -10,7 +10,7 @@ module.exports = {
   entry: './src/app.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    publicPath: isProd ? '/vue-lab/dist/' : '/dist/',
     filename: isProd ? 'build.[hash:4].js' : 'build.js',
     chunkFilename: "[name].[hash:4].min.js"
   },
@@ -111,7 +111,7 @@ if (isProd) {
       minimize: true
     }),
     new HtmlWebpackPlugin({
-      filename: '../dist/index.html',
+      filename: '../index.html',
       template: path.resolve(__dirname, './src/index.tpl'),
       inject: true
     }),
