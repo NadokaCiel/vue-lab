@@ -4,16 +4,13 @@
       <div v-for="item in graph" class="item-box" :class="[{'selected':item.selected},'dot-'+item.weight]" :style="{'visibility':item.show ? 'visible' : 'hidden'}" :key="item.id" @click="linkup(item)">
         <div class="line" :class="{'line-dot':item.isDot}"></div>
         <div class="line" :class="item.linkList"></div>
-        <div>{{item.weight}}</div>
+        <!-- <div>{{item.weight}}</div> -->
+        <i class="fa" :class="'fa-'+iconList[item.weight-1]"></i>
       </div>
-<!--       <div v-for="item in graph" class="item-box" :class="[{'selected':item.selected}]" :style="{'visibility':item.show ? 'visible' : 'hidden'}" :key="item.id" @click="linkup(item)">
-        <div class="line" :class="{'line-dot':item.isDot}"></div>
-        <div class="line" :class="item.linkList"></div>
-        <div>{{item.x}},{{item.y}}</div>
-      </div> -->
     </transition-group>
     <div class="box">
-      <el-button @click="random()">random</el-button>
+      <div>Score:{{score}}</div>
+      <el-button @click="random()" :disabled="ticket==0">random({{ticket}})</el-button>
     </div>
   </div>
 </template>
@@ -28,14 +25,33 @@ export default {
   },
   data() {
     return {
+      score: 0,
+      ticket: 2,
       height: 10,
       width: 10,
-      type: 9,
-      data:[],
-      graph:[],
-      path:[],
-      linked:{},
-      dotMap:{},
+      type: 14,
+      data: [],
+      graph: [],
+      path: [],
+      linked: {},
+      dotMap: {},
+      iconList: [
+        "cutlery",
+        "bolt",
+        "balance-scale",
+        "beer",
+        "anchor",
+        "diamond",
+        "bath",
+        "automobile",
+        "coffee",
+        "grav",
+        "bug",
+        "bank",
+        "bell",
+        "tree",
+        "globe",
+      ]
     }
   },
   methods: {
@@ -66,10 +82,15 @@ export default {
     },
     random() {
       const vm = this
+      if(vm.ticket<1){
+        return
+      }
+      vm.ticket--
+      vm.score = Math.round(vm.score/2)
       vm.data = _.shuffle(vm.data)
       vm.dotMap = {}
       vm.data.forEach((item, i) => {
-        item.show = true
+        // item.show = true
         item.selected = false
         item.isDot = false
         item.linkList = []
@@ -128,6 +149,9 @@ export default {
     },
     linkup(item) {
       const vm = this
+      if(!item.show){
+        return
+      }
       vm.clearLink()
       item.selected = !item.selected
       if(item.id === vm.linked.id){
@@ -213,6 +237,7 @@ export default {
       const vm = this
       dot.show = false
       vm.linked.show = false
+      vm.score+= dot.weight * 2
       vm.linked = {}
       vm.allClear()
     },
@@ -285,7 +310,8 @@ export default {
         return item.show == false
       })
       if(flag){
-        console.log('All Clear!')
+        console.log('Congratulations！All Clear!')
+        console.log('Your score：'+this.score)
       }
     }
   },
@@ -435,6 +461,21 @@ export default {
   }
   .dot-10 {
     background-color: @co10;
+  }
+  .dot-11 {
+    background-color: @co11;
+  }
+  .dot-12 {
+    background-color: @co12;
+  }
+  .dot-13 {
+    background-color: @co13;
+  }
+  .dot-14 {
+    background-color: @co14;
+  }
+  .dot-15 {
+    background-color: @co15;
   }
 }
 </style>

@@ -6,7 +6,6 @@ import * as Test from '../pages/Test/bundle'
 import * as Article from '../pages/Article/bundle'
 
 let router = new Router({
-  base:'vue-lab',
   mode: 'history',
   scrollBehavior: () => ({ y: 0 }),
   routes: [
