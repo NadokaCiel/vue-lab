@@ -7,6 +7,7 @@ import * as Article from '../pages/Article/bundle'
 
 let router = new Router({
   mode: 'history',
+  base:'vue-lab',
   scrollBehavior: () => ({ y: 0 }),
   routes: [
     { path: '/', redirect: '/home' },
