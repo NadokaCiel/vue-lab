@@ -358,7 +358,7 @@ export default {
         background-color: @light;
       }
       &.selected {
-        background-color: @sec1;
+        background-color: rgba(179,24,0, 0.8);
       }
     }
     .line{
