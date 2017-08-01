@@ -16,9 +16,9 @@ import _ from "lodash"
 import "babel-polyfill"
 
 import 'flex.css'
-import 'normalize.css'
-import 'element-ui/lib/theme-default/index.css'
-import 'font-awesome.css'
+// import 'normalize.css'
+// import 'element-ui/lib/theme-default/index.css'
+// import 'font-awesome.css'
 import './style/common.less'
 
 
