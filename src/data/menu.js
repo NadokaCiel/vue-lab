@@ -18,6 +18,10 @@ export default [{
         name: "Traversal",
         icon: "fa fa-fw fa-superpowers",
         route: "Traversal",
+    }, {
+        name: "Chess",
+        icon: "fa fa-fw fa-street-view",
+        route: "Chess",
     }]
 }, {
     name: "My Article",
