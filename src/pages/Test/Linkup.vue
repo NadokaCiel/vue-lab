@@ -1,7 +1,7 @@
 <template>
   <div class="link-up">
-    <transition-group name="cell" tag="div" class="box" :style="{'width':(width+2) * 50 + 'px','height':(height+2) * 50 + 'px'}">
-      <div v-for="item in graph" class="item-box" :class="[{'selected':item.selected},'dot-'+item.weight]" :style="{'visibility':item.show ? 'visible' : 'hidden'}" :key="item.id" @click="linkup(item)">
+    <transition-group v-loading="gameLoading" name="cell" tag="div" class="box game-board" :style="{'width':(width+2) * 50 + 'px','height':(height+2) * 50 + 'px'}">
+      <div v-for="item in graph" class="item-box" :class="[{'selected':item.selected},'dot-'+getColor(item.weight)]" :style="{'visibility':item.show ? 'visible' : 'hidden'}" :key="item.id" @click="linkup(item)">
         <div class="line" :class="{'line-dot':item.isDot}"></div>
         <div class="line" :class="item.linkList"></div>
         <!-- <div>{{item.weight}}</div> -->
@@ -9,6 +9,12 @@
       </div>
     </transition-group>
     <div class="box">
+      <el-radio-group v-model="difficulty" @change="regame()">
+        <el-radio-button :label="2">easy</el-radio-button>
+        <el-radio-button :label="4">normal</el-radio-button>
+        <el-radio-button :label="6">hard</el-radio-button>
+        <el-radio-button :label="8">nightmare</el-radio-button>
+      </el-radio-group>
       <div>Score:{{score}}</div>
       <el-button @click="random()" :disabled="ticket==0">random({{ticket}})</el-button>
     </div>
@@ -25,11 +31,13 @@ export default {
   },
   data() {
     return {
+      gameLoading:false,
+      difficulty:4,
       score: 0,
       ticket: 2,
-      height: 10,
-      width: 10,
-      type: 14,
+      height: 12,
+      width: 12,
+      type: 12,
       data: [],
       graph: [],
       path: [],
@@ -51,21 +59,50 @@ export default {
         "bell",
         "tree",
         "globe",
-      ]
+        "gavel",
+        "gift",
+        "heartbeat",
+        "music",
+        "money",
+        "star"
+      ],
+      weightPool:{}
     }
   },
   methods: {
+    regame(){
+      const vm = this
+      vm.gameLoading = true
+      vm.score = 0
+      vm.ticket++
+      vm.width = 4 * vm.difficulty - 4
+      vm.height = 4 * vm.difficulty - 4
+      vm.type = 2 * vm.difficulty + 4
+      vm.generate()
+      setTimeout(()=>{
+        vm.gameLoading = false
+      }, 1000)
+    },
+    getColor(weight){
+      const vm = this
+      if(vm.difficulty<5){
+        return weight
+      }else{
+        return Math.round(Math.random() * vm.type + 1)
+      }
+    },
     generate() {
       const vm = this
       const data = []
       const total = vm.height * vm.width
       const mirror = []
+      vm.weightPool = {}
       for (let i = 0; i < Math.floor(total / 2); i++) {
         data.push({
           id: i,
           show: true,
           selected: false,
-          weight: Math.round(Math.random() * vm.type + 1)
+          weight: vm.getRandom()
         })
       }
       const dl = data.length
@@ -80,13 +117,26 @@ export default {
       vm.data = data.concat(mirror)
       vm.random()
     },
-    random() {
+    getRandom(){
+      const vm = this
+      let n = Math.round(Math.random() * vm.type + 1)
+      if(!vm.weightPool[n]){
+        vm.weightPool[n] = 1
+        return n
+      }else if(vm.weightPool[n] >= Math.floor(vm.width * vm.height / vm.type / 2)){
+        return vm.getRandom()
+      }else {
+        vm.weightPool[n] ++
+        return n
+      }
+    },
+    random(behalf) {
       const vm = this
       if(vm.ticket<1){
         return
       }
       vm.ticket--
-      vm.score = Math.round(vm.score/2)
+      vm.score = behalf ? vm.score : Math.round(vm.score/2)
       vm.data = _.shuffle(vm.data)
       vm.dotMap = {}
       vm.data.forEach((item, i) => {
@@ -237,9 +287,13 @@ export default {
       const vm = this
       dot.show = false
       vm.linked.show = false
-      vm.score+= dot.weight * 2
+      vm.score+= (dot.weight+vm.difficulty) * 2
       vm.linked = {}
       vm.allClear()
+      if(vm.difficulty === 8){
+        vm.ticket++
+        vm.random(true)
+      }
     },
     cancel(dot){
       const vm = this
@@ -333,6 +387,10 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
+
+  .game-board{
+    overflow: hidden;
+  }
 
   .box {
     margin:25px auto;
@@ -430,7 +488,7 @@ export default {
     }
   }
   .cell-move {
-    transition: transform 1s;
+    transition: transform .6s;
   }
   .dot-1 {
     background-color: @co1;
@@ -476,6 +534,24 @@ export default {
   }
   .dot-15 {
     background-color: @co15;
+  }
+  .dot-16 {
+    background-color: @co16;
+  }
+  .dot-17 {
+    background-color: @co17;
+  }
+  .dot-18 {
+    background-color: @co18;
+  }
+  .dot-19 {
+    background-color: @co19;
+  }
+  .dot-20 {
+    background-color: @co20;
+  }
+  .dot-21 {
+    background-color: @co21;
   }
 }
 </style>
