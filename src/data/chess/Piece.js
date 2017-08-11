@@ -16,7 +16,7 @@ export default class Piece {
 }
 
 const moves = {
-	pawn(startBlock, endBlock, axisMap) {
+	pawn(startBlock, endBlock, axisMap, isHint) {
 		const x1 = startBlock.x
 		const y1 = startBlock.y
 		const x2 = endBlock.x
@@ -33,14 +33,15 @@ const moves = {
 		if (Math.abs(_x) === 1 && Math.abs(_y) === 1 && endBlock.piece && endBlock.piece.camp !== startBlock.piece.camp) {
 			return true
 		}
-		if (startBlock.piece.inactive && Math.abs(_x) === 0 && Math.abs(_y) === 2 && !axisMap[`(${x1},${(y1+y2)/2})`].piece && !endBlock.piece) {
-			axisMap['passer'] = {
+		if (startBlock.piece.inactive && Math.abs(_x) === 0 && Math.abs(_y) === 2 && !axisMap[`(${x1},${(y1+y2)/2})`].piece && !endBlock.piece && inBorder(y2, upside)) {
+			const passer = {
 				camp:startBlock.piece.camp,
 				block:endBlock,
 				eaten:false,
 				x:x2,
 				y:startBlock.piece.camp === 'white' ? y2 + 1 : y2 - 1
 			}
+			isHint ? '' : axisMap['passer'] = passer
 			return true
 		}
 		if (Math.abs(_x) === 1 && Math.abs(_y) === 1 && axisMap.passer && axisMap.passer.camp !== startBlock.piece.camp && x2 === axisMap['passer'].x && y2 === axisMap['passer'].y) {
@@ -176,6 +177,13 @@ function clearPath(x1, y1, x2, y2, axisMap) {
 				return false
 			}
 		}
+		return true
+	}
+	return false
+}
+
+function inBorder(y2, upside) {
+	if((!upside && y2 === 4) ||(upside && y2 === 5)){
 		return true
 	}
 	return false

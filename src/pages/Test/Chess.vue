@@ -1,7 +1,7 @@
 <template>
   <div class="chess">
     <div class="chess-board">
-      <div v-for="block in graph" class="block" :class="[{'black':(block.x%2)^(block.y%2)},{'selected':selected.position==block.position}]" @click="move(block)">
+      <div v-for="block in graph" class="block" :class="[{'black':(block.x%2)^(block.y%2)},{'selected':selected.position==block.position},{'access':accessPath.indexOf(block.position)>=0 && !block.piece},{'attack':accessPath.indexOf(block.position)>=0 && block.piece}]" @click="move(block)" @mouseenter="showPath(block)" @mouseleave="clearPath()">
         <!-- {{block.x}}:{{block.y}} -->
         <!-- {{block.position}} -->
         <div v-if="block.piece" :class="['piece','piece-'+getName(block)+'-'+block.piece.camp]">
@@ -58,6 +58,7 @@ export default {
       currentFnn:"",
       fnnList:[],
       graph:[],
+      accessPath:[],
       axisMap:{},
       battleMap:{},
       selected:{},
@@ -79,6 +80,7 @@ export default {
     },
     generate() {
       const vm = this
+      vm.selected = {}
       vm.graph = []
       vm.cemetery = {
         white:[],
@@ -141,6 +143,24 @@ export default {
         }
         vm.selected = {}
       }
+    },
+    showPath(block){
+      const vm = this
+      console.log(1)
+      if(!block.piece){
+        return
+      }
+      vm.graph.forEach(b=>{
+        if(b.position == block.position){
+          return
+        }
+        if(block.piece.move(block, b, vm.axisMap, true)){
+          vm.accessPath.push(b.position)
+        }
+      })
+    },
+    clearPath(){
+      this.accessPath = []
     },
     lastLine(block1, block2) {
       const vm = this
@@ -267,6 +287,26 @@ export default {
       }
       &.selected{
         border-color: @deco1;
+      }
+      &.access:after {
+        content: ' ';
+        position: absolute;
+        top:-2px;
+        right:-2px;
+        bottom:-2px;
+        left:-2px;
+        box-shadow: 0 0 10px 3px rgba(0,255,128, .4);
+        background-color: rgba(0,255,128, .4);
+      }
+      &.attack:after {
+        content: ' ';
+        position: absolute;
+        top:-2px;
+        right:-2px;
+        bottom:-2px;
+        left:-2px;
+        box-shadow: 0 0 10px 3px rgba(235,63,47, .4);
+        background-color: rgba(235,63,47, .4);
       }
       .piece{
         width: 60px;
