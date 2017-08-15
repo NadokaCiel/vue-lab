@@ -73,53 +73,57 @@ export default {
       }
       if (key == "up") {
         for (let i = 0; i < y; i++) {
-          if (vm.pointMap[`(${x},${i})`].weight == 0) {
+          if (vm.pointMap[`(${x},${i})`].weight == 0 && vm.clearPath(x, i, x, y)) {
             [vm.pointMap[`(${x},${i})`].weight, vm.pointMap[`(${x},${y})`].weight] = [vm.pointMap[`(${x},${y})`].weight, vm.pointMap[`(${x},${i})`].weight]
             vm.changed = true
             return
           } else if (vm.pointMap[`(${x},${i})`].weight == vm.pointMap[`(${x},${y})`].weight && vm.clearPath(x, i, x, y)) {
             vm.pointMap[`(${x},${y})`].weight = 0
             vm.pointMap[`(${x},${i})`].weight++
-              vm.changed = true
+            vm.score += Math.pow(2, vm.pointMap[`(${x},${i})`].weight)
+            vm.changed = true
             return
           }
         }
       } else if (key == "down") {
         for (let i = vm.height - 1; i > y; i--) {
-          if (vm.pointMap[`(${x},${i})`].weight == 0) {
+          if (vm.pointMap[`(${x},${i})`].weight == 0 && vm.clearPath(x, i, x, y)) {
             [vm.pointMap[`(${x},${i})`].weight, vm.pointMap[`(${x},${y})`].weight] = [vm.pointMap[`(${x},${y})`].weight, vm.pointMap[`(${x},${i})`].weight]
             vm.changed = true
             return
           } else if (vm.pointMap[`(${x},${i})`].weight == vm.pointMap[`(${x},${y})`].weight && vm.clearPath(x, i, x, y)) {
             vm.pointMap[`(${x},${y})`].weight = 0
             vm.pointMap[`(${x},${i})`].weight++
-              vm.changed = true
+            vm.score += Math.pow(2, vm.pointMap[`(${x},${i})`].weight)
+            vm.changed = true
             return
           }
         }
       } else if (key == "left") {
         for (let i = 0; i < x; i++) {
-          if (vm.pointMap[`(${i},${y})`].weight == 0) {
+          if (vm.pointMap[`(${i},${y})`].weight == 0 && vm.clearPath(i, y, x, y)) {
             [vm.pointMap[`(${i},${y})`].weight, vm.pointMap[`(${x},${y})`].weight] = [vm.pointMap[`(${x},${y})`].weight, vm.pointMap[`(${i},${y})`].weight]
             vm.changed = true
             return
           } else if (vm.pointMap[`(${i},${y})`].weight == vm.pointMap[`(${x},${y})`].weight && vm.clearPath(i, y, x, y)) {
             vm.pointMap[`(${x},${y})`].weight = 0
             vm.pointMap[`(${i},${y})`].weight++
-              vm.changed = true
+            vm.score += Math.pow(2, vm.pointMap[`(${i},${y})`].weight)
+            vm.changed = true
             return
           }
         }
       } else if (key == "right") {
         for (let i = vm.width - 1; i > x; i--) {
-          if (vm.pointMap[`(${i},${y})`].weight == 0) {
+          if (vm.pointMap[`(${i},${y})`].weight == 0 && vm.clearPath(i, y, x, y)) {
             [vm.pointMap[`(${i},${y})`].weight, vm.pointMap[`(${x},${y})`].weight] = [vm.pointMap[`(${x},${y})`].weight, vm.pointMap[`(${i},${y})`].weight]
             vm.changed = true
             return
           } else if (vm.pointMap[`(${i},${y})`].weight == vm.pointMap[`(${x},${y})`].weight && vm.clearPath(i, y, x, y)) {
             vm.pointMap[`(${x},${y})`].weight = 0
             vm.pointMap[`(${i},${y})`].weight++
-              vm.changed = true
+            vm.score += Math.pow(2, vm.pointMap[`(${i},${y})`].weight)
+            vm.changed = true
             return
           }
         }
@@ -183,7 +187,8 @@ export default {
       return false
     },
     overCheck(){
-      return this.graph.every(item=>{
+      const vm = this
+      return vm.graph.every(item=>{
         return item.weight > 0
       })
     },
