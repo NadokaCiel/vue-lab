@@ -77,23 +77,23 @@ export default {
             [vm.pointMap[`(${x},${i})`].weight, vm.pointMap[`(${x},${y})`].weight] = [vm.pointMap[`(${x},${y})`].weight, vm.pointMap[`(${x},${i})`].weight]
             vm.changed = true
             return
-          } else if (vm.pointMap[`(${x},${i})`].weight == vm.pointMap[`(${x},${y})`].weight) {
+          } else if (vm.pointMap[`(${x},${i})`].weight == vm.pointMap[`(${x},${y})`].weight && vm.clearPath(x, i, x, y)) {
             vm.pointMap[`(${x},${y})`].weight = 0
-            vm.pointMap[`(${x},${i})`].weight ++
-            vm.changed = true
+            vm.pointMap[`(${x},${i})`].weight++
+              vm.changed = true
             return
           }
         }
       } else if (key == "down") {
-        for (let i = vm.height-1; i > y; i--) {
+        for (let i = vm.height - 1; i > y; i--) {
           if (vm.pointMap[`(${x},${i})`].weight == 0) {
             [vm.pointMap[`(${x},${i})`].weight, vm.pointMap[`(${x},${y})`].weight] = [vm.pointMap[`(${x},${y})`].weight, vm.pointMap[`(${x},${i})`].weight]
             vm.changed = true
             return
-          } else if (vm.pointMap[`(${x},${i})`].weight == vm.pointMap[`(${x},${y})`].weight) {
+          } else if (vm.pointMap[`(${x},${i})`].weight == vm.pointMap[`(${x},${y})`].weight && vm.clearPath(x, i, x, y)) {
             vm.pointMap[`(${x},${y})`].weight = 0
-            vm.pointMap[`(${x},${i})`].weight ++
-            vm.changed = true
+            vm.pointMap[`(${x},${i})`].weight++
+              vm.changed = true
             return
           }
         }
@@ -103,23 +103,23 @@ export default {
             [vm.pointMap[`(${i},${y})`].weight, vm.pointMap[`(${x},${y})`].weight] = [vm.pointMap[`(${x},${y})`].weight, vm.pointMap[`(${i},${y})`].weight]
             vm.changed = true
             return
-          } else if (vm.pointMap[`(${i},${y})`].weight == vm.pointMap[`(${x},${y})`].weight) {
+          } else if (vm.pointMap[`(${i},${y})`].weight == vm.pointMap[`(${x},${y})`].weight && vm.clearPath(i, y, x, y)) {
             vm.pointMap[`(${x},${y})`].weight = 0
-            vm.pointMap[`(${i},${y})`].weight ++
-            vm.changed = true
+            vm.pointMap[`(${i},${y})`].weight++
+              vm.changed = true
             return
           }
         }
       } else if (key == "right") {
-        for (let i = vm.width-1; i > x; i--) {
+        for (let i = vm.width - 1; i > x; i--) {
           if (vm.pointMap[`(${i},${y})`].weight == 0) {
             [vm.pointMap[`(${i},${y})`].weight, vm.pointMap[`(${x},${y})`].weight] = [vm.pointMap[`(${x},${y})`].weight, vm.pointMap[`(${i},${y})`].weight]
             vm.changed = true
             return
-          } else if (vm.pointMap[`(${i},${y})`].weight == vm.pointMap[`(${x},${y})`].weight) {
+          } else if (vm.pointMap[`(${i},${y})`].weight == vm.pointMap[`(${x},${y})`].weight && vm.clearPath(i, y, x, y)) {
             vm.pointMap[`(${x},${y})`].weight = 0
-            vm.pointMap[`(${i},${y})`].weight ++
-            vm.changed = true
+            vm.pointMap[`(${i},${y})`].weight++
+              vm.changed = true
             return
           }
         }
@@ -155,11 +155,32 @@ export default {
       if(vm.changed){
         if(!vm.overCheck()){
           vm.newNum()
-        }else{
-          alert("Game Over!")
         }
         vm.changed = false
       }
+    },
+    clearPath(x1, y1, x2, y2) {
+      const vm = this
+      if (x1 === x2) {
+        const minY = y1 < y2 ? y1 : y2
+        const length = Math.abs(y1 - y2)
+        for (let i = 1; i < length; i++) {
+          if (vm.pointMap[`(${x1},${minY+i})`].weight > 0) {
+            return false
+          }
+        }
+        return true
+      } else if (y1 === y2) {
+        const minX = x1 < x2 ? x1 : x2
+        const length = Math.abs(x1 - x2)
+        for (let i = 1; i < length; i++) {
+          if (vm.pointMap[`(${minX+i},${y1})`].weight > 0) {
+            return false
+          }
+        }
+        return true
+      }
+      return false
     },
     overCheck(){
       return this.graph.every(item=>{
