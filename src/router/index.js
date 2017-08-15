@@ -13,6 +13,7 @@ let router = new Router({
     { path: '/', redirect: '/home' },
     { path: '/home', name:"Home", component: Home },
     { path: '/lab/button', name:"Button", component: Test.Button },
+    { path: '/lab/slider', name:"Slider", component: Test.Slider },
     { path: '/lab/linkup', name:"Linkup", component: Test.Linkup },
     { path: '/lab/chess', name:"Chess", component: Test.Chess },
     { path: '/lab/traversal', name:"Traversal", component: Test.Traversal },

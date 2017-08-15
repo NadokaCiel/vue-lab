@@ -1,5 +1,5 @@
 <template>
-  <el-menu default-active="1" class="nav" @mouseenter.native="showText=!showText" @mouseleave.native="showText=!showText" @select="menuSelected">
+  <el-menu :default-active="getRouter()" class="nav" @mouseenter.native="showText=!showText" @mouseleave.native="showText=!showText" @select="menuSelected">
     <template v-for="item in menu">
       <el-menu-item v-if="!item.sub || item.sub.length==0" :index="item.route">
         <i :class="item.icon ? item.icon : 'el-icon-null'"></i>
@@ -36,6 +36,9 @@ export default {
   created: function() {
   },
   methods:{
+    getRouter(){
+      return this.$route.name
+    },
     menuSelected(index,path){
       this.$router.push({name:index})
     }

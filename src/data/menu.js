@@ -22,6 +22,10 @@ export default [{
         name: "Chess",
         icon: "fa fa-fw fa-street-view",
         route: "Chess",
+    }, {
+        name: "Slider",
+        icon: "fa fa-fw fa-braille",
+        route: "Slider",
     }]
 }, {
     name: "My Article",
