@@ -9,7 +9,7 @@ export default {
   props: {
     clickFunc: {
       type: Array,
-      default: ()=>{
+      default: () => {
         return []
       }
     },
@@ -39,11 +39,11 @@ export default {
   methods: {
     async handleClick(evt) {
       let vm = this
-      if(vm.clickFunc.length>0){
+      if (vm.clickFunc.length > 0) {
         vm.innerLoading = true
-        try{
+        try {
           await vm.clickFunc[0](...vm.clickFunc.slice(1))
-        }catch(e){
+        } catch (e) {
           console.error(e)
         }
         vm.innerLoading = false

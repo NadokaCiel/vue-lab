@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     toTest(){
-      this.$router.push({name:'ButtonTest'})
+      this.$router.push({name:'Lab-Button'})
     }
   },
   computed: {

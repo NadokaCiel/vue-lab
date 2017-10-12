@@ -1,0 +1,10 @@
+export const Button = r => require.ensure([], () => r(require('./Button.vue')), 'lab');
+export const Traversal = r => require.ensure([], () => r(require('./Traversal.vue')), 'lab');
+export const Linkup = r => require.ensure([], () => r(require('./Linkup.vue')), 'lab');
+export const Chess = r => require.ensure([], () => r(require('./Chess.vue')), 'lab');
+export const Slider = r => require.ensure([], () => r(require('./Slider.vue')), 'lab');
+// export const Vivid = r => require.ensure([], () => r(require('./Vivid.vue')), 'lab');
+export const Lattice = r => require.ensure([], () => r(require('./Lattice.vue')), 'lab');
+export const Joseph = r => require.ensure([], () => r(require('./Joseph.vue')), 'lab');
+export const Puzzle = r => require.ensure([], () => r(require('./Puzzle.vue')), 'lab');
+export const Poker = r => require.ensure([], () => r(require('./Poker.vue')), 'lab');

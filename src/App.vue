@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-    <nav-bar></nav-bar>
+    <div @mouseenter="onMenu(true)" @mouseleave="onMenu(false)">
+      <nav-bar></nav-bar>
+    </div>
     <transition name="el-fade-in-linear">
-      <router-view class="app-view"></router-view>
+      <router-view class="app-view" :class="{'folded':expand}"></router-view>
     </transition>
   </div>
 </template>
@@ -14,6 +16,7 @@ export default {
   name: 'app',
   data() {
     return {
+      expand:false,
     }
   },
   created: function() {
@@ -31,6 +34,11 @@ export default {
     let a = this.deepAssign({a: 1 }, {a: {b: 0 } }, {a: {b: 1, c: 2 } }, {a: {c: {d: 2 } } }, {a: {c: {f: 3 } } }); 
     // console.log(a)
   },
+  methods:{
+    onMenu(isFoled){
+      this.expand = isFoled
+    }
+  },
   computed: mapState([]),
   components: {
     navBar
@@ -46,6 +54,11 @@ export default {
 
   .app-view {
     margin-left: 50px;
+    transition: all .3s ease;
+  }
+  .folded{
+    margin-left:200px;
+    transition: all .3s ease;
   }
 }
 * {

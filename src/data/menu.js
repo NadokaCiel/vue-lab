@@ -4,7 +4,7 @@ export default [{
     route: "Home",
 }, {
     name: "My Lab",
-    icon: "fa fa-fw fa-puzzle-piece",
+    icon: "fa fa-fw fa-flask",
     route: "Lab",
     sub: [{
         name: "Button",
@@ -26,6 +26,18 @@ export default [{
         name: "Slider",
         icon: "fa fa-fw fa-braille",
         route: "Slider",
+    }, {
+        name: "Joseph",
+        icon: "fa fa-fw fa-spin fa-circle-o-notch",
+        route: "Joseph",
+    }, {
+        name: "Puzzle",
+        icon: "fa fa-fw fa-puzzle-piece",
+        route: "Puzzle",
+    }, {
+        name: "Poker",
+        icon: "fa fa-fw fa-th-large",
+        route: "Poker",
     }]
 }, {
     name: "My Article",
@@ -34,6 +46,6 @@ export default [{
     sub: [{
         name: "List",
         icon: "fa fa-fw fa-list",
-        route: "ArticleList",
+        route: "List",
     }]
 }]

@@ -80,7 +80,15 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    noInfo: true
+    noInfo: true,
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000",
+        pathRewrite: {
+          "^/api": ""
+        }
+      }
+    }
   },
   resolveLoader: {
     moduleExtensions: ['-loader']

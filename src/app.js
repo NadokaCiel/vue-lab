@@ -10,7 +10,7 @@ import * as filters from './filters'
 import data from './store'
 import router from './router'
 
-import axios from 'axios'
+import {ajax} from './lib/ajax'
 import deepAssign from "deep-assign"
 import _ from "lodash"
 import "babel-polyfill"
@@ -25,8 +25,7 @@ import './style/common.less'
 Vue.use(Vuex)
 Vue.use(Router)
 // Vue.use(ElementUI)
-
-Vue.prototype.$ajax = axios
+Vue.prototype.$ajax = ajax
 Vue.prototype.deepAssign = deepAssign
 
 //注册全局过滤器

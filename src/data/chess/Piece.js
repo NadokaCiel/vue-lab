@@ -3,6 +3,7 @@ export default class Piece {
 		const piece = pieceEnum[alias.toLowerCase()]
 		this.name = piece.name
 		this.move = piece.move
+		this.weight = piece.weight
 		this.camp = /[A-Z]/.test(alias) ? 'white' : 'black'
 		this.inactive = true
 	}
@@ -11,6 +12,7 @@ export default class Piece {
 		const piece = pieceEnum[alias.toLowerCase()]
 		this.name = piece.name
 		this.move = piece.move
+		this.weight = piece.weight
 		this.inactive = true
 	}
 }
@@ -124,26 +126,32 @@ const pieceEnum = {
 	'p':{
 		name:'Pawn',
 		move:moves.pawn,
+		weight:10
 	},
 	'r':{
 		name:'Rook',
 		move:moves.rook,
+		weight:50
 	},
 	'n':{
 		name:'Knight',
 		move:moves.knight,
+		weight:30
 	},
 	'b':{
 		name:'Bishop',
 		move:moves.bishop,
+		weight:30
 	},
 	'q':{
 		name:'Queen',
 		move:moves.queen,
+		weight:90
 	},
 	'k':{
 		name:'King',
 		move:moves.king,
+		weight:900
 	},
 }
 

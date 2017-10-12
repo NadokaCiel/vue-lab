@@ -10,7 +10,7 @@
         <i :class="item.icon ? item.icon : 'el-icon-null'"></i>
         <span>{{showText ? item.name : ''}}</span>
         </template>
-        <el-menu-item v-for="(subItem,index) in item.sub" :index="subItem.route" :key="index">
+        <el-menu-item v-for="(subItem,index) in item.sub" :index="item.route + '-' +subItem.route" :key="index">
           <i :class="subItem.icon ? subItem.icon : 'el-icon-null'"></i>
           <span>{{showText ? subItem.name : ''}}</span>
         </el-menu-item>
